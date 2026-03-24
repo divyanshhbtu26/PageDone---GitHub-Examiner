@@ -21,7 +21,7 @@ def get_commits(owner, repo):
 
     result = []
 
-    for c in data[:10]:  # limit for safety
+    for c in data[:50]:  # limit for safety
         sha = c.get("sha")
         details = get_commit_details(owner, repo, sha)
 
