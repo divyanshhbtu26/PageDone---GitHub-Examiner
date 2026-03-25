@@ -11,14 +11,20 @@ export default function Dashboard() {
   const { repoData } = useContext(RepoContext);
 
   const [step, setStep] = useState(0); // UPDATED: step-based reveal
-
+  // const[data, setData] = useState(null);
   // UPDATED: section-by-section animation timing
   useEffect(() => {
-    const interval = setInterval(() => {
-      setStep((prev) => prev + 1);
-    }, 600);
+  const interval = setInterval(() => {
+    setStep((prev) => {
+      if (prev >= 4) {
+        clearInterval(interval);
+        return prev;
+      }
+      return prev + 1;
+    });
+  }, 600);
 
-    return () => clearInterval(interval);
+  return () => clearInterval(interval);
   }, []);
 
   if (!repoData) return <div className="text-white">No Data</div>;
@@ -42,17 +48,21 @@ export default function Dashboard() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
         >
-          <InsightCards insights={repoData.insights} />
+          <InsightCards insights={repoData.insights} ai={repoData.ai} />
         </motion.div>
       )}
 
       {/* UPDATED: Animated Charts */}
       {step >= 2 && (
         <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
+        layout
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.4 }}
         >
-          <Charts data={repoData} />
+        <div className="w-full min-h-75">
+        <Charts data={repoData} ai={repoData.ai} />
+        </div>
         </motion.div>
       )}
 
@@ -62,7 +72,7 @@ export default function Dashboard() {
           initial={{ x: -50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
         >
-          <Contributors list={repoData.contributors} />
+          <Contributors contributors={repoData.contributors} ai={repoData.ai} />
         </motion.div>
       )}
 

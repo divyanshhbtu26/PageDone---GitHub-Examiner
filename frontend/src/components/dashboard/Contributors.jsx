@@ -1,19 +1,36 @@
-export default function Contributors({ list }) {
-  return (
-    <div className="glass neon bg-white/10 p-4 rounded-xl">
-      <h3 className="text-xl mb-3">Contributors</h3>
+// 🔥 UPDATED: Contributors.jsx (Persona Badge)
 
-      {list.map((c, i) => (
-        <div key={i} className="mb-3">
-          <p>{c.name}</p>
-          <div className="bg-gray-700 h-2 rounded">
-            <div
-              className="bg-cyan-400 h-2 rounded"
-              style={{ width: `${c.percentage}%` }}
-            />
-          </div>
+import React from "react";
+
+const Contributors = ({ contributors, ai }) => {
+  if (!contributors) return null;
+
+  // 🔥 MAP PERSONAS BY NAME
+  const personaMap = {};
+  ai?.personas?.forEach((p) => {
+    personaMap[p.name] = p.persona;
+  });
+
+  return (
+    <div className="card glass">
+      <h2>👥 Contributors</h2>
+
+      {contributors.map((c, index) => (
+        <div key={index} className="contributor-card">
+
+          {/* 🔥 NAME + PERSONA BADGE */}
+          <h4>
+            {c.name}
+            <span className="badge">
+              {personaMap[c.name] || "Contributor"}
+            </span>
+          </h4>
+
+          <p>Commits: {c.commits}</p>
         </div>
       ))}
     </div>
   );
-}
+};
+
+export default Contributors;
