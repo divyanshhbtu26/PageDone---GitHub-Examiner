@@ -22,7 +22,7 @@ export default function Charts({ data }) {
   })) || [];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="glass neon grid grid-cols-1 md:grid-cols-3 gap-4">
       {/* Line Chart */}
       <div className="bg-gray-900 p-2 rounded-lg">
         <h3 className="text-xs text-gray-400 mb-2">Weekly Activity</h3>

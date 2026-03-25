@@ -1,9 +1,9 @@
 export default function RepoHeader({ repo }) {
   return (
-    <div className="bg-white/10 p-5 rounded-xl text-center">
-      <h2 className="text-2xl font-bold text-cyan-400">{repo?.name}</h2>
+    <div className="glass neon bg-white/10 p-5 rounded-xl text-center">
+      <h2 className="text-2xl glow-text font-bold text-cyan-400">{repo?.repo_name || "Unknown Repository"}</h2>
       {/* GitHub API returns owner as an object, or sometimes just a login string depending on your service */}
-      <p className="text-gray-300">Owner: {repo?.owner}</p>
+      <p className="glow-text text-gray-300">Owner: {repo?.owner}</p>
       
       <div className="flex justify-center gap-6 mt-3 text-lg">
         {/* Note the specific GitHub naming: stargazers_count, forks_count, open_issues_count */}

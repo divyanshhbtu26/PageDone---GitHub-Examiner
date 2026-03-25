@@ -9,6 +9,15 @@ from services.activity_service import get_commit_activity
 from services.language_service import get_languages
 from services.insight_service import get_insights
 
+from services.ai_service import (
+    classify_commits_ai,
+    get_work_distribution,
+    calculate_bus_factor,
+    generate_personas_ai,
+    generate_summary_ai,
+    calculate_impact
+)
+
 router = APIRouter()
 
 @router.post("/analyze-repo")
@@ -22,11 +31,29 @@ def analyze_repo(data: RepoRequest):
     languages = get_languages(owner, repo)
     insights = get_insights(contributors, activity)
 
+
+    classified_commits = classify_commits_ai(commits)  # 🔥 AI classification
+    work_distribution = get_work_distribution(classified_commits)
+    bus_factor = calculate_bus_factor(contributors)
+    personas = generate_personas_ai(contributors)
+    summary = generate_summary_ai(commits)
+    impact_score = calculate_impact(commits)
+
+
     return {
         **repo_info,
         "contributors": contributors,
         "commits": commits,
         "commit_activity": activity,
         "languages": languages,
-        "insights": insights
+        "insights": insights,
+
+        "ai": {
+            "work_distribution": work_distribution,
+            "bus_factor": bus_factor,
+            "personas": personas,
+            "summary": summary,
+            "impact_score": impact_score
+        }
+
     }

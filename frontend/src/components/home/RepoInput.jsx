@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { analyzeRepo } from "../../services/api";
 import { RepoContext } from "../../context/RepoContext";
+import { motion } from "framer-motion";
 
 export default function RepoInput() {
   const [url, setUrl] = useState("");
@@ -17,7 +18,7 @@ export default function RepoInput() {
 
       setTimeout(() => {
         navigate("/dashboard");
-      }, 3000);
+      }, 4000);
     } catch (err) {
       alert("Error fetching repo");
       navigate("/");
@@ -25,8 +26,10 @@ export default function RepoInput() {
   };
 
   return (
-    <div className="bg-white/10 p-10 rounded-2xl backdrop-blur-lg shadow-xl text-center">
-      <h1 className="text-3xl mb-6 font-bold">GitHub Repo Analyzer</h1>
+    <motion.div className="glass neon p-10 text-center bg-white/10 rounded-2xl backdrop-blur-lg shadow-xl">
+      <h1 className="text-4xl mb-6 glow-text font-bold">
+        GitHub Analyzer ⚡
+      </h1>
 
       <input
         type="text"
@@ -40,10 +43,10 @@ export default function RepoInput() {
 
       <button
         onClick={handleAnalyze}
-        className="mt-5 px-6 py-2 bg-cyan-400 text-black rounded-lg hover:bg-cyan-300"
+        className="mt-5 px-6 py-2 bg-cyan-400 text-black rounded-lg neon hover:bg-cyan-300"
       >
-        Analyze
+        Analyze 🚀
       </button>
-    </div>
+    </motion.div>
   );
 }

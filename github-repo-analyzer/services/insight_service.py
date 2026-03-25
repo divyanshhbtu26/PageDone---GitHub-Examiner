@@ -9,11 +9,11 @@ def get_insights(contributors, commit_activity):
         total = sum([w["total_commits"] for w in last_weeks])
 
         if total > 0:
+            insights.append("Not an Active repository")
+        else:
             insights.append("Active repository")
-        # else:
-        #     insights.append("Active repository")
-    # else:
-    #     insights.append("No activity data available")
+    else:
+        insights.append("No activity data available")
 
     # ---------------------------
     # 2. Bus Factor Check

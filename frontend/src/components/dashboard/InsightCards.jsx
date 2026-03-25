@@ -1,6 +1,6 @@
 export default function InsightCards({ insights }) {
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="glass neon grid grid-cols-3 gap-4">
       {insights.map((item, i) => (
         <div
           key={i}

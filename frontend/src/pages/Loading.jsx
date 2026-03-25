@@ -1,32 +1,52 @@
 import { useEffect, useState } from "react";
 
-export default function Loading({ setPage }) {
-  const steps = [
-    "Fetching repository data...",
-    "Analyzing commits...",
-    "Evaluating contributors...",
-    "Generating AI insights...",
-  ];
+// UPDATED: steps moved outside for better control
+const steps = [
+  "Fetching repository data...",
+  "Analyzing commits...",
+  "Evaluating contributors...",
+  "Generating AI insights...",
+];
 
-  const [current, setCurrent] = useState(0);
+export default function Loading() {
+  // UPDATED: typing effect states
+  const [text, setText] = useState("");
+  const [stepIndex, setStepIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => prev + 1);
-    }, 800);
+    let i = 0;
 
-    return () => clearInterval(interval);
-  }, []);
+    // UPDATED: typing animation logic
+    const typing = setInterval(() => {
+      setText(steps[stepIndex]?.slice(0, i));
+      i++;
+
+      if (i > steps[stepIndex]?.length) {
+        clearInterval(typing);
+
+        setTimeout(() => {
+          setStepIndex((prev) => prev + 1);
+          setText("");
+        }, 1500);
+      }
+    }, 30);
+
+    return () => clearInterval(typing);
+  }, [stepIndex]);
 
   return (
-    <div className="h-screen flex flex-col items-center justify-center bg-[#020617] text-cyan-400">
-      <div className="text-2xl mb-5 animate-pulse">Processing...</div>
+    // UPDATED: premium centered UI + glow
+    <div className="h-screen flex flex-col items-center justify-center bg-[#020617] text-white">
+      
+      {/* UPDATED: glowing heading */}
+      <div className="text-2xl mb-5 animate-pulse glow-text">
+        ⚡ Processing...
+      </div>
 
-      {steps.slice(0, current).map((step, i) => (
-        <p key={i} className="mb-2">
-          ✔ {step}
-        </p>
-      ))}
+      {/* UPDATED: typing effect text */}
+      <div className="text-cyan-400 text-lg">
+        {text}
+      </div>
     </div>
   );
 }
